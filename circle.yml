@@ -19,4 +19,4 @@ dependencies:
 
 test:
   override:
-    - docker run --entrypoint sh go -c "sudo apk add --allow-untrusted --upgrade /packages/x86_64/*.apk"
+    - docker run --entrypoint sh pkg -c "sudo apk add --allow-untrusted --upgrade /packages/x86_64/*.apk"
