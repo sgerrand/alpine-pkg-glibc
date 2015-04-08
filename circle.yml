@@ -1,0 +1,22 @@
+general:
+  artifacts:
+    - packages
+
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - echo $RSA_PRIVATE_KEY > abuild.rsa
+    - echo $RSA_PUBLIC_KEY > abuild.rsa.pub
+  override:
+    - docker info
+    - docker build -t pkg .
+    - docker run --name pkg pkg
+    - docker commit pkg pkg
+    - docker cp pkg:/packages .
+
+test:
+  override:
+    - docker run --entrypoint sh go -c "sudo apk add --allow-untrusted --upgrade /packages/x86_64/*.apk"

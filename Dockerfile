@@ -1,0 +1,1 @@
+FROM andyshinn/alpine-abuild
