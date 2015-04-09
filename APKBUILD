@@ -11,7 +11,6 @@ install="$pkgname.post-install"
 source="http://mirrors.kernel.org/archlinux/core/os/x86_64/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz
 ld.so.conf"
 subpackages="$pkgname-bin"
-depends="!libgcc"
 
 package() {
   mkdir -p "$pkgdir"/usr/glibc
