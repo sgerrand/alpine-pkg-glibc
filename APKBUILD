@@ -7,8 +7,10 @@ pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/gliderlabs/alpine-glibc"
 license="GPL"
-source="http://mirrors.kernel.org/archlinux/core/os/x86_64/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz"
+source="http://mirrors.kernel.org/archlinux/core/os/x86_64/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz
+ld.so.conf"
 subpackages="$pkgname-bin"
+triggers="$pkgname-bin.trigger=/usr/glibc/usr/lib"
 
 package() {
   mkdir -p "$pkgdir"/usr/glibc
@@ -30,8 +32,11 @@ package() {
 }
 
 bin() {
-  mkdir -p "$subpkgdir"/usr/glibc/usr/bin
+  mkdir -p "$subpkgdir"/usr/glibc/usr/bin \
+    "$subpkgdir"/etc
   cp -a "$srcdir"/usr/bin/* "$subpkgdir"/usr/glibc/usr/bin/
+  cp -La "$srcdir"/ld.so.conf "$subpkgdir"/etc/
 }
 
-md5sums="cd2bef93120db7401bd7a4451e97dab4  glibc-2.21-2-x86_64.pkg.tar.xz"
+md5sums="cd2bef93120db7401bd7a4451e97dab4  glibc-2.21-2-x86_64.pkg.tar.xz
+fda27293b95f89c7a61a0d379d1c3bde  ld.so.conf"
