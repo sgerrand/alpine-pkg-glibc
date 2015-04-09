@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/glibc/usr/bin/ldconfig /usr/glibc/usr/lib
