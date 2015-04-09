@@ -17,7 +17,7 @@ package() {
   mkdir "$pkgdir"/etc
   mkdir "$pkgdir"/lib64
   cp -a "$srcdir"/usr "$pkgdir"/usr/glibc/usr
-  cp -a "$srcdir"/ld.so.conf "$pkgdir"/etc/
+  cp -La "$srcdir"/ld.so.conf "$pkgdir"/etc/
   rm -rf "$pkgdir"/usr/glibc/usr/lib/systemd \
     "$pkgdir"/usr/glibc/usr/lib/gconv \
     "$pkgdir"/usr/glibc/usr/lib/locale \
