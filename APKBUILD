@@ -1,42 +1,35 @@
 # Maintainer: Glider Labs <team@gliderlabs.com>
 
 pkgname="glibc"
-pkgver="2.21"
-pkgrel="2"
+pkgver="2.22"
+pkgrel="5"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/gliderlabs/alpine-glibc"
 license="GPL"
-source="http://mirrors.kernel.org/archlinux/core/os/x86_64/glibc-${pkgver}-${pkgrel}-${arch}.pkg.tar.xz
-ld.so.conf"
+source="https://github.com/andyshinn/docker-glibc-builder/releases/download/$pkgver-$pkgrel/glibc-bin-$pkgver-$pkgrel-x86_64.tar.gz"
 subpackages="$pkgname-bin"
-triggers="$pkgname-bin.trigger=/usr/glibc/usr/lib"
 
 package() {
-  mkdir -p "$pkgdir"/usr/glibc
-  mkdir "$pkgdir"/etc
-  mkdir "$pkgdir"/lib64
-  cp -a "$srcdir"/usr "$pkgdir"/usr/glibc/usr
-  rm -rf "$pkgdir"/usr/glibc/usr/lib/systemd \
-    "$pkgdir"/usr/glibc/usr/lib/gconv \
-    "$pkgdir"/usr/glibc/usr/lib/locale \
-    "$pkgdir"/usr/glibc/usr/lib/tmpfiles.d \
-    "$pkgdir"/usr/glibc/usr/lib/getconf \
-    "$pkgdir"/usr/glibc/usr/lib/audit \
-    "$pkgdir"/usr/glibc/usr/lib/*.a \
-    "$pkgdir"/usr/glibc/usr/bin/* \
-    "$pkgdir"/usr/glibc/usr/include \
-    "$pkgdir"/usr/glibc/usr/share
-  "$srcdir"/usr/bin/ldconfig -r "$pkgdir" -C /etc/ld.so.cache /usr/glibc/usr/lib
-  ln -s /usr/glibc/usr/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
+  mkdir -p "$pkgdir"
+  cp -a "$srcdir"/usr "$pkgdir"
+  rm "$pkgdir"/usr/glibc-compat/etc/rpc
+  rm -rf "$pkgdir"/usr/glibc-compat/bin
+  rm -rf "$pkgdir"/usr/glibc-compat/sbin
+  rm -rf "$pkgdir"/usr/glibc-compat/lib/gconv
+  rm -rf "$pkgdir"/usr/glibc-compat/lib/getconf
+  rm -rf "$pkgdir"/usr/glibc-compat/lib/audit
+  rm -rf "$pkgdir"/usr/glibc-compat/lib/*.a
+  rm -rf "$pkgdir"/usr/glibc-compat/include
+  rm -rf "$pkgdir"/usr/glibc-compat/share
+  rm -rf "$pkgdir"/usr/glibc-compat/var
+  #ln -s /usr/glibc-compat/usr/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
 }
 
 bin() {
-  mkdir -p "$subpkgdir"/usr/glibc/usr/bin \
-    "$subpkgdir"/etc
-  cp -a "$srcdir"/usr/bin/* "$subpkgdir"/usr/glibc/usr/bin/
-  cp -La "$srcdir"/ld.so.conf "$subpkgdir"/etc/
+  mkdir -p "$subpkgdir"/usr/glibc-compat
+  cp -a "$srcdir"/usr/glibc-compat/bin "$subpkgdir"/usr/glibc-compat
+  cp -a "$srcdir"/usr/glibc-compat/sbin "$subpkgdir"/usr/glibc-compat
 }
 
-md5sums="cd2bef93120db7401bd7a4451e97dab4  glibc-2.21-2-x86_64.pkg.tar.xz
-fda27293b95f89c7a61a0d379d1c3bde  ld.so.conf"
+md5sums="4f2ea9f8cc1be716479f831597a14682  glibc-bin-2.22-5-x86_64.tar.gz"

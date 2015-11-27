@@ -1,1 +1,5 @@
 *.rsa*
+*.pkg*
+src
+pkg
+packages

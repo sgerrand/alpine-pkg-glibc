@@ -8,15 +8,11 @@ machine:
 
 dependencies:
   pre:
-    - echo $RSA_PRIVATE_KEY > abuild.rsa
-    - echo $RSA_PUBLIC_KEY > abuild.rsa.pub
+    - mkdir packages
+    - echo $RSA_PUBLIC_KEY > packages/andyshinn.rsa.pub
   override:
-    - docker info
-    - docker build -t pkg .
-    - docker run --name pkg pkg
-    - docker commit pkg pkg
-    - docker cp pkg:/packages .
+    - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages andyshinn/alpine-abuild
 
 test:
   override:
-    - docker run --entrypoint sh pkg -c "sudo apk add --allow-untrusted --upgrade /packages/x86_64/*.apk"
+    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.2 sh -c " apk -U add --allow-untrusted --upgrade /packages/builder/x86_64/*.apk"
