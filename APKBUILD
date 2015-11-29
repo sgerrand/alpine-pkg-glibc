@@ -11,8 +11,9 @@ source="https://github.com/andyshinn/docker-glibc-builder/releases/download/$pkg
 subpackages="$pkgname-bin"
 
 package() {
-  mkdir -p "$pkgdir"
+  mkdir -p "$pkgdir/lib64"
   cp -a "$srcdir"/usr "$pkgdir"
+  touch "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
   rm "$pkgdir"/usr/glibc-compat/etc/rpc
   rm -rf "$pkgdir"/usr/glibc-compat/bin
   rm -rf "$pkgdir"/usr/glibc-compat/sbin
@@ -23,7 +24,7 @@ package() {
   rm -rf "$pkgdir"/usr/glibc-compat/include
   rm -rf "$pkgdir"/usr/glibc-compat/share
   rm -rf "$pkgdir"/usr/glibc-compat/var
-  #ln -s /usr/glibc-compat/usr/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
+  ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
 }
 
 bin() {
