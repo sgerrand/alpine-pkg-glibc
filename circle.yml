@@ -21,7 +21,7 @@ test:
 
 deployment:
   release:
-    tag: /v[0-9]+(\.[0-9]+)*/
+    tag: /[0-9]+(\.[0-9]+){1,2}(\-r\d+)?$/
     owner: andyshinn
     commands:
       - ghr -u andyshinn $CIRCLE_TAG packages/
