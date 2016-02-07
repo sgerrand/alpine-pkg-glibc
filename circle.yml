@@ -25,6 +25,7 @@ deployment:
     owner: andyshinn
     commands:
       - ghr -u andyshinn $CIRCLE_TAG packages/
+      - ghr -u andyshinn $CIRCLE_TAG packages/builder/x86_64
   master:
     branch: master
     owner: andyshinn
