@@ -8,6 +8,8 @@ machine:
 
 dependencies:
   pre:
+    - git fetch --tags
+    - go get github.com/tcnksm/ghr
     - mkdir packages
     - echo $RSA_PUBLIC_KEY > packages/andyshinn.rsa.pub
   override:
@@ -16,3 +18,15 @@ dependencies:
 test:
   override:
     - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.2 sh -c " apk -U add --allow-untrusted --upgrade /packages/builder/x86_64/*.apk"
+
+deployment:
+  release:
+    tag: /v[0-9]+(\.[0-9]+)*/
+    owner: andyshinn
+    commands:
+      - ghr $CIRCLE_TAG packages/
+  master:
+    branch: master
+    owner: andyshinn
+    commands:
+      - ghr --replace master packages/
