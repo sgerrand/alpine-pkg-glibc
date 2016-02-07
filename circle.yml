@@ -30,5 +30,5 @@ deployment:
     branch: master
     owner: andyshinn
     commands:
-      - ghr -u andyshinn --replace master packages/
-      - ghr -u andyshinn --replace master packages/builder/x86_64
+      - ghr -u andyshinn --replace pre packages/
+      - ghr -u andyshinn --replace pre packages/builder/x86_64
