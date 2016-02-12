@@ -2,16 +2,17 @@
 
 pkgname="glibc"
 pkgver="2.22"
-pkgrel="5"
+_pkgrel="5"
+pkgrel="6"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/gliderlabs/alpine-glibc"
 license="GPL"
-source="https://github.com/andyshinn/docker-glibc-builder/releases/download/$pkgver-$pkgrel/glibc-bin-$pkgver-$pkgrel-x86_64.tar.gz"
-subpackages="$pkgname-bin"
+source="https://github.com/andyshinn/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz"
+subpackages="$pkgname-bin $pkgname-i18n"
 
 package() {
-  mkdir -p "$pkgdir/lib64"
+  mkdir -p "$pkgdir/lib64" "$pkgdir/usr/glibc-compat/lib/locale"
   cp -a "$srcdir"/usr "$pkgdir"
   touch "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
   rm "$pkgdir"/usr/glibc-compat/etc/rpc
@@ -28,9 +29,17 @@ package() {
 }
 
 bin() {
+  depends="$pkgname"
   mkdir -p "$subpkgdir"/usr/glibc-compat
   cp -a "$srcdir"/usr/glibc-compat/bin "$subpkgdir"/usr/glibc-compat
   cp -a "$srcdir"/usr/glibc-compat/sbin "$subpkgdir"/usr/glibc-compat
+}
+
+i18n() {
+  depends="$pkgname-bin"
+  arch="noarch"
+  mkdir -p "$subpkgdir"/usr/glibc-compat
+  cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
 md5sums="4f2ea9f8cc1be716479f831597a14682  glibc-bin-2.22-5-x86_64.tar.gz"
