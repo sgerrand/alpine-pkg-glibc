@@ -31,4 +31,4 @@ deployment:
     owner: andyshinn
     commands:
       - ghr -u andyshinn --prerelease --delete unreleased packages
-      - ghr -u andyshinn --prerelease unrelease packages/builder/x86_64
+      - ghr -u andyshinn --prerelease unreleased packages/builder/x86_64
