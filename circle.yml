@@ -30,5 +30,5 @@ deployment:
     branch: master
     owner: andyshinn
     commands:
-      - ghr -u andyshinn --delete pre packages/
-      - ghr -u andyshinn pre packages/builder/x86_64
+      - ghr -u andyshinn --prerelease --delete unreleased packages
+      - ghr -u andyshinn --prerelease unrelease packages/builder/x86_64
