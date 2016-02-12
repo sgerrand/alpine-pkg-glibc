@@ -15,7 +15,7 @@ subpackages="$pkgname-bin $pkgname-i18n"
 package() {
   mkdir -p "$pkgdir/lib64" "$pkgdir/usr/glibc-compat/lib/locale" "$pkgdir"/etc
   cp -a "$srcdir"/usr "$pkgdir"
-  cp -a "$srcdir"/nsswitch.conf "$pkgdir"/etc/nsswitch.conf
+  cp "$srcdir"/nsswitch.conf "$pkgdir"/etc/nsswitch.conf
   touch "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
   rm "$pkgdir"/usr/glibc-compat/etc/rpc
   rm -rf "$pkgdir"/usr/glibc-compat/bin
