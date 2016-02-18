@@ -3,7 +3,7 @@
 pkgname="glibc"
 pkgver="2.22"
 _pkgrel="5"
-pkgrel="8"
+pkgrel="9"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/gliderlabs/alpine-glibc"
@@ -30,6 +30,7 @@ package() {
   rm -rf "$pkgdir"/usr/glibc-compat/share
   rm -rf "$pkgdir"/usr/glibc-compat/var
   ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
+  ln -s /usr/glibc-compat/etc/ld.so.cache ${pkgdir}/etc/ld.so.cache
 }
 
 bin() {
