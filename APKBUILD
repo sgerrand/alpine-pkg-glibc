@@ -1,9 +1,9 @@
 # Maintainer: Glider Labs <team@gliderlabs.com>
 
 pkgname="glibc"
-pkgver="2.22"
-_pkgrel="5"
-pkgrel="9"
+pkgver="2.23"
+_pkgrel="0"
+pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/gliderlabs/alpine-glibc"
@@ -47,6 +47,6 @@ i18n() {
   cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
-md5sums="4f2ea9f8cc1be716479f831597a14682  glibc-bin-2.22-5-x86_64.tar.gz
+md5sums="5950e0b8f0bae4af07b405c7b1f6e194  glibc-bin-2.23-0-x86_64.tar.gz
 5be984273de4203318c9c3fb0d4e9d2b  nsswitch.conf
 b4a846d17bde75e47976d972c4e067a5  ld.so.conf"
