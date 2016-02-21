@@ -11,7 +11,7 @@ dependencies:
     - git fetch --tags
     - go get github.com/tcnksm/ghr
     - mkdir packages
-    - echo $RSA_PUBLIC_KEY > packages/andyshinn.rsa.pub
+    - echo -e "$RSA_PUBLIC_KEY" > packages/andyshinn.rsa.pub
   override:
     - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages andyshinn/alpine-abuild
 
