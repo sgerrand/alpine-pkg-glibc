@@ -13,11 +13,11 @@ dependencies:
     - mkdir packages
     - echo -e "$RSA_PUBLIC_KEY" > packages/andyshinn.rsa.pub
   override:
-    - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages andyshinn/alpine-abuild
+    - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -e RSA_PRIVATE_KEY_NAME="andyshinn.rsa" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages andyshinn/alpine-abuild
 
 test:
   override:
-    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.2 sh -c " apk -U add --allow-untrusted --upgrade /packages/builder/x86_64/*.apk"
+    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.3 sh -c "cp /packages/andyshinn.rsa.pub /etc/apk/keys/ && apk -U add --upgrade /packages/builder/x86_64/*.apk"
 
 deployment:
   release:
