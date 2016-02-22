@@ -17,7 +17,7 @@ dependencies:
 
 test:
   override:
-    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.3 sh -c "cp /packages/andyshinn.rsa.pub /etc/apk/keys/ && apk -U add --upgrade /packages/builder/x86_64/*.apk"
+    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.3 sh -c "cp /packages/andyshinn.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk"
 
 deployment:
   release:
