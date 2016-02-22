@@ -1,4 +1,4 @@
-*.rsa*
+*.rsa
 *.pkg*
 src
 pkg
