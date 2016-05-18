@@ -1,3 +1,7 @@
+# Needs Maintainer
+
+This repository needs a maintainer. I will no longer be maintaining this package. Please respond to issue #14 if you would like to take over ownership of this repository.
+
 # alpine-pkg-glibc
 
 [![CircleCI](https://img.shields.io/circleci/project/andyshinn/alpine-pkg-glibc/master.svg)](https://circleci.com/gh/andyshinn/alpine-pkg-glibc)
