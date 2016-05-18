@@ -1,6 +1,6 @@
 # Needs Maintainer
 
-This repository needs a maintainer. I will no longer be maintaining this package. Please respond to issue #14 if you would like to take over ownership of this repository.
+This repository needs a maintainer. I will no longer be maintaining this package. Please respond to [issue #16](https://github.com/andyshinn/alpine-pkg-glibc/issues/16) if you would like to take over ownership of this repository.
 
 # alpine-pkg-glibc
 
