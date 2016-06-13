@@ -3,7 +3,7 @@
 pkgname="glibc"
 pkgver="2.23"
 _pkgrel="0"
-pkgrel="2"
+pkgrel="3"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/sgerrand/alpine-pkg-glibc"
