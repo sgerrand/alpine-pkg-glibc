@@ -14,12 +14,12 @@ The current installation method for these packages is to pull them in using `wge
 
     apk --no-cache add ca-certificates
     wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r1/glibc-2.23-r1.apk
-    apk add glibc-2.23-r1.apk
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-2.23-r3.apk
+    apk add glibc-2.23-r3.apk
 
 ## Locales
 
 You will need to generate your locale if you would like to use a specific one for your glibc application. You can do this by installing the `glibc-i18n` package and generating a locale using the `localedef` binary. An example for en_US.UTF-8 would be:
 
-    apk add glibc-bin-2.23-r1.apk glibc-i18n-2.23-r1.apk
+    apk add glibc-bin-2.23-r3.apk glibc-i18n-2.23-r3.apk
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
