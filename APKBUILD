@@ -3,12 +3,12 @@
 pkgname="glibc"
 pkgver="2.23"
 _pkgrel="0"
-pkgrel="2"
+pkgrel="3"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
-url="https://github.com/gliderlabs/alpine-glibc"
+url="https://github.com/sgerrand/alpine-pkg-glibc"
 license="GPL"
-source="https://github.com/andyshinn/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
+source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
 nsswitch.conf
 ld.so.conf"
 subpackages="$pkgname-bin $pkgname-i18n"
