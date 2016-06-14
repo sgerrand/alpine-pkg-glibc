@@ -1,7 +1,7 @@
 # Maintainer: Glider Labs <team@gliderlabs.com>
 
 pkgname="glibc"
-pkgver="2.25"
+pkgver="2.24"
 _pkgrel="0"
 pkgrel="3"
 pkgdesc="GNU C Library compatibility layer"
