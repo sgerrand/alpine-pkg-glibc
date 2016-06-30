@@ -11,7 +11,7 @@ dependencies:
     - git fetch --tags
     - go get github.com/tcnksm/ghr
     - mkdir packages
-    - echo -e "$RSA_PUBLIC_KEY" > packages/sgerrand.rsa.pub
+    - echo "$RSA_PUBLIC_KEY" > packages/sgerrand.rsa.pub
   override:
     - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -e RSA_PRIVATE_KEY_NAME="sgerrand.rsa" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages sgerrand/alpine-abuild
 
