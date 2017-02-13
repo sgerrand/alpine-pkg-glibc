@@ -1,9 +1,9 @@
 # Maintainer: Sasha Gerrand <alpine-pkgs@sgerrand.com>
 
 pkgname="glibc"
-pkgver="2.23"
+pkgver="2.24"
 _pkgrel="0"
-pkgrel="4"
+pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/sgerrand/alpine-pkg-glibc"
@@ -48,6 +48,12 @@ i18n() {
   cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
-md5sums="5950e0b8f0bae4af07b405c7b1f6e194  glibc-bin-2.23-0-x86_64.tar.gz
+md5sums="5689ccad01298259ccbdf7888ca3bf90  glibc-bin-2.24-0-x86_64.tar.gz
 5be984273de4203318c9c3fb0d4e9d2b  nsswitch.conf
 0484678534996fdddef848544bd1a12d  ld.so.conf"
+sha256sums="f488ff2f9156d486ef1fdae908e63cd112cec721fb6a250fd8e41586396373b8  glibc-bin-2.24-0-x86_64.tar.gz
+3be94785355b4b363d1268f133e198323441eafa6017b2b1fed32ae279d685c7  nsswitch.conf
+f8eec838bace59c29a5dc04550f60e3c7ba9f3a9df7b14dae36349ad90152e00  ld.so.conf"
+sha512sums="15491626d764ec93eda2b88fa50f8d125a3d1d047afb28495cd6042330718880297c38b6d71cb07d18238d4153fd07185e79005f71c7b15315a2b5f301a4ae95  glibc-bin-2.24-0-x86_64.tar.gz
+478bdd9f7da9e6453cca91ce0bd20eec031e7424e967696eb3947e3f21aa86067aaf614784b89a117279d8a939174498210eaaa2f277d3942d1ca7b4809d4b7e  nsswitch.conf
+2912f254f8eceed1f384a1035ad0f42f5506c609ec08c361e2c0093506724a6114732db1c67171c8561f25893c0dd5c0c1d62e8a726712216d9b45973585c9f7  ld.so.conf"
