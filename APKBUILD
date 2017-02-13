@@ -1,14 +1,14 @@
 # Maintainer: Glider Labs <team@gliderlabs.com>
 
 pkgname="glibc"
-pkgver="2.23"
+pkgver="2.24"
 _pkgrel="0"
-pkgrel="3"
+pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
-url="https://github.com/sgerrand/alpine-pkg-glibc"
+url="https://github.com/stackfeed/alpine-pkg-glibc"
 license="GPL"
-source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
+source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-x86_64.tar.gz
 nsswitch.conf
 ld.so.conf"
 subpackages="$pkgname-bin $pkgname-i18n"
@@ -48,6 +48,6 @@ i18n() {
   cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
-md5sums="5950e0b8f0bae4af07b405c7b1f6e194  glibc-bin-2.23-0-x86_64.tar.gz
+md5sums="3f84f6dbaffacc20fb5ad5337f98dc80  glibc-bin-2.24-x86_64.tar.gz
 5be984273de4203318c9c3fb0d4e9d2b  nsswitch.conf
 0484678534996fdddef848544bd1a12d  ld.so.conf"

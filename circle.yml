@@ -8,27 +8,38 @@ machine:
 
 dependencies:
   pre:
+    - sudo -H pip install --upgrade pip
+    - sudo -H pip install circleci-helpers
     - git fetch --tags
     - go get github.com/tcnksm/ghr
-    - mkdir packages
-    - echo -e "$RSA_PUBLIC_KEY" > packages/sgerrand.rsa.pub
+    - mkdir packages && cat stackfeed.rsa.pub > packages/stackfeed.rsa.pub
   override:
-    - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -e RSA_PRIVATE_KEY_NAME="sgerrand.rsa" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages sgerrand/alpine-abuild
+    - docker run -e RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" -e RSA_PRIVATE_KEY_NAME="stackfeed.rsa" -v $(pwd):/home/builder/package -v $(pwd)/packages:/home/builder/packages sgerrand/alpine-abuild
 
 test:
   override:
-    - docker run -it -v $(pwd)/packages:/packages gliderlabs/alpine:3.3 sh -c "cp /packages/sgerrand.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk"
+    - ? | 
+          circle-matrix <<"EHD"
+            env:
+              - VERSION=3.5
+              - VERSION=3.4
+
+            script:
+              - docker run -v $(pwd)/packages:/packages alpine:$VERSION sh -c "cp /packages/stackfeed.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk" 2>&1
+          EHD
+      :
+        parallel: true
 
 deployment:
   release:
     tag: /[0-9]+(\.[0-9]+){1,2}(\-r\d+)?$/
-    owner: sgerrand
+    owner: stackfeed
     commands:
-      - ghr -u sgerrand $CIRCLE_TAG packages/
-      - ghr -u sgerrand $CIRCLE_TAG packages/builder/x86_64
+      - ghr -u stackfeed -r alpine-pkg-glibc $CIRCLE_TAG packages/
+      - ghr -u stackfeed -r alpine-pkg-glibc $CIRCLE_TAG packages/builder/x86_64
   master:
     branch: master
-    owner: sgerrand
+    owner: stackfeed
     commands:
-      - ghr -u sgerrand --prerelease --delete unreleased packages
-      - ghr -u sgerrand --prerelease unreleased packages/builder/x86_64
+      - ghr -u stackfeed -r alpine-pkg-glibc --prerelease --delete unreleased packages
+      - ghr -u stackfeed -r alpine-pkg-glibc --prerelease unreleased packages/builder/x86_64
