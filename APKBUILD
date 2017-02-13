@@ -1,4 +1,4 @@
-# Maintainer: Glider Labs <team@gliderlabs.com>
+# Maintainer: Sasha Gerrand <alpine-pkgs@sgerrand.com>
 
 pkgname="glibc"
 pkgver="2.23"
