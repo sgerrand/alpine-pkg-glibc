@@ -3,7 +3,7 @@
 pkgname="glibc"
 pkgver="2.25"
 _pkgrel="0"
-pkgrel="0"
+pkgrel="1"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/sgerrand/alpine-pkg-glibc"
@@ -11,7 +11,7 @@ license="GPL"
 source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
 nsswitch.conf
 ld.so.conf"
-subpackages="$pkgname-bin $pkgname-i18n"
+subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n"
 triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
 
 package() {
@@ -25,8 +25,6 @@ package() {
   rm -rf "$pkgdir"/usr/glibc-compat/lib/gconv
   rm -rf "$pkgdir"/usr/glibc-compat/lib/getconf
   rm -rf "$pkgdir"/usr/glibc-compat/lib/audit
-  rm -rf "$pkgdir"/usr/glibc-compat/lib/*.a
-  rm -rf "$pkgdir"/usr/glibc-compat/include
   rm -rf "$pkgdir"/usr/glibc-compat/share
   rm -rf "$pkgdir"/usr/glibc-compat/var
   ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib/ld-linux-x86-64.so.2
