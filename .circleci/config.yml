@@ -1,0 +1,49 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Create Docker volumes
+          command: |
+            docker create --name input --volume /home/builder/package alpine:3.6 /bin/true
+            docker create --name output --volume /packages alpine:3.6 /bin/true
+            docker cp ./APKBUILD input:/home/builder/package
+      - run:
+          name: Build packages
+          command: docker run --volumes-from input --volumes-from output sgerrand/alpine-abuild:v5
+      - run:
+          name: Test package installation
+          command: docker run --volumes-from output alpine:3.6 sh -c "cp /packages/sgerrand.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk"
+      - run:
+          name: Extract packages
+          command: |
+            mkdir -p packages
+            docker cp output:/packages/builder packages/
+      - run:
+          name: Remove Docker volumes
+          command: |
+            docker rm input
+            docker rm output
+          when: always
+      - store_artifacts:
+          destination: pkgs
+          path: packages
+    working_directory: /alpine-pkg-glibc
+
+deployment:
+  release:
+    tag: /[0-9]+(\.[0-9]+){1,2}(\-r\d+)?$/
+    owner: sgerrand
+    commands:
+      - ghr -u sgerrand $CIRCLE_TAG packages/
+      - ghr -u sgerrand $CIRCLE_TAG packages/builder/x86_64
+  master:
+    branch: master
+    owner: sgerrand
+    commands:
+      - ghr -u sgerrand --prerelease --delete unreleased packages
+      - ghr -u sgerrand --prerelease unreleased packages/builder/x86_64
