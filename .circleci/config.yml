@@ -29,8 +29,9 @@ jobs:
           name: Create Docker volumes
           command: |
             docker create --name input --volume /home/builder/package alpine:3.8 /bin/true
-            docker create --name output --volume /packages alpine:3.8 /bin/true
             docker cp . input:/home/builder/package/
+            docker create --name output --volume /packages alpine:3.8 /bin/true
+            docker cp sgerrand.rsa.pub output:/packages/
       - run:
           name: Build packages
           command: docker run --volumes-from input --volumes-from output sgerrand/alpine-abuild:v7
