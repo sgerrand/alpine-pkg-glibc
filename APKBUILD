@@ -1,7 +1,7 @@
 # Maintainer: Sasha Gerrand <alpine-pkgs@sgerrand.com>
 
 pkgname="glibc"
-pkgver="2.27"
+pkgver="2.28"
 _pkgrel="0"
 pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
@@ -46,6 +46,6 @@ i18n() {
   cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
-sha512sums="a9f229dbb2ee27f74397f979f7b49e713c6c926b7fe948d95139ce16a8dcc3a94096be2c8d5037df92e798cc1388b4b169bfc8062dce4614155188efe67abaaa  glibc-bin-2.27-0-x86_64.tar.gz
+sha512sums="77403b5c28d0f251d4855dd1de2f5d46f20b32ed63792c97fbd409cb6c57b711c0a5471bb68aba1d8a3fe0df88b64e9c9e14b1d5235734c84c9758dd95b9c6c7  glibc-bin-2.28-0-x86_64.tar.gz
 478bdd9f7da9e6453cca91ce0bd20eec031e7424e967696eb3947e3f21aa86067aaf614784b89a117279d8a939174498210eaaa2f277d3942d1ca7b4809d4b7e  nsswitch.conf
 2912f254f8eceed1f384a1035ad0f42f5506c609ec08c361e2c0093506724a6114732db1c67171c8561f25893c0dd5c0c1d62e8a726712216d9b45973585c9f7  ld.so.conf"
