@@ -34,7 +34,7 @@ jobs:
             docker cp sgerrand.rsa.pub output:/packages/
       - run:
           name: Build packages
-          command: docker run --volumes-from input --volumes-from output sgerrand/alpine-abuild:v7
+          command: docker run --env RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" --env RSA_PRIVATE_KEY_NAME="sgerrand.rsa" --volumes-from input --volumes-from output sgerrand/alpine-abuild:v7
       - run:
           name: Test package installation
           command: docker run --volumes-from output alpine:3.8 sh -c "cp /packages/sgerrand.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk"
