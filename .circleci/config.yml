@@ -1,0 +1,103 @@
+version: 2
+references:
+  basic-job: &basic-job
+    working_directory: ~/alpine-pkg-glibc
+  upload-job: &upload-job
+    <<: *basic-job
+    docker:
+      - image: golang:alpine
+  upload-attach-workspace: &upload-attach-workspace
+    attach_workspace:
+      at: .
+  upload-packages: &upload-packages
+    run:
+      command: apk add --no-cache git openssh-client
+      name: Install dependencies of go get
+  upload-ghr: &upload-ghr
+    run:
+      command: go get github.com/tcnksm/ghr
+      name: Install ghr executable
+jobs:
+  build:
+    <<: *basic-job
+    docker:
+      - image: docker:git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Create Docker volumes
+          command: |
+            docker create --name input --volume /home/builder/package alpine:3.8 /bin/true
+            docker cp . input:/home/builder/package/
+            docker create --name output --volume /packages alpine:3.8 /bin/true
+            docker cp sgerrand.rsa.pub output:/packages/
+      - run:
+          name: Build packages
+          command: docker run --env RSA_PRIVATE_KEY="$RSA_PRIVATE_KEY" --env RSA_PRIVATE_KEY_NAME="sgerrand.rsa" --volumes-from input --volumes-from output sgerrand/alpine-abuild:v7
+      - run:
+          name: Test package installation
+          command: docker run --volumes-from output alpine:3.8 sh -c "cp /packages/sgerrand.rsa.pub /etc/apk/keys/ && apk -U add --no-progress --upgrade /packages/builder/x86_64/*.apk"
+      - run:
+          name: Extract packages
+          command: |
+            mkdir -p packages
+            docker cp output:/packages/builder packages/
+      - run:
+          name: Remove Docker volumes
+          command: |
+            docker rm input
+            docker rm output
+          when: always
+      - persist_to_workspace:
+          root: .
+          paths: packages
+      - store_artifacts:
+          destination: pkgs
+          path: packages
+  upload-master:
+    <<: *upload-job
+    steps:
+      - *upload-attach-workspace
+      - *upload-packages
+      - *upload-ghr
+      - deploy:
+          name: Upload to GitHub release
+          command: |
+            ghr -r $CIRCLE_PROJECT_REPONAME -u $CIRCLE_PROJECT_USERNAME --prerelease --delete unreleased packages
+            ghr -r $CIRCLE_PROJECT_REPONAME -u $CIRCLE_PROJECT_USERNAME --prerelease unreleased packages/builder/x86_64
+  upload-tag:
+    <<: *upload-job
+    steps:
+      - *upload-attach-workspace
+      - *upload-packages
+      - *upload-ghr
+      - deploy:
+          name: Upload to GitHub release
+          command: |
+            ghr -r $CIRCLE_PROJECT_REPONAME -u $CIRCLE_PROJECT_USERNAME $CIRCLE_TAG packages
+            ghr -r $CIRCLE_PROJECT_REPONAME -u $CIRCLE_PROJECT_USERNAME $CIRCLE_TAG packages/builder/x86_64
+workflows:
+  version: 2
+  test-then-upload-artefacts:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - upload-master:
+          filters:
+            branches:
+              only: master
+            tags:
+              ignore: /.*/
+          requires:
+            - build
+      - upload-tag:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /[0-9]+(\.[0-9]+){1,2}(\-r\d+)?$/
+          requires:
+            - build
