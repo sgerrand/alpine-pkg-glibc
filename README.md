@@ -17,6 +17,12 @@ The current installation method for these packages is to pull them in using `wge
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
     apk add glibc-2.28-r0.apk
 
+### Please Note
+
+:warning: The URL of the public signing key has changed! :warning:
+
+Any previous reference to `https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub` should be updated with immediate effect to `https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub`.
+
 ## Locales
 
 You will need to generate your locale if you would like to use a specific one for your glibc application. You can do this by installing the `glibc-i18n` package and generating a locale using the `localedef` binary. An example for en_US.UTF-8 would be:
