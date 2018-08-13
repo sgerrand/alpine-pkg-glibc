@@ -26,6 +26,11 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Download public signing key
+          command: |
+            wget https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+            echo "823b54589c93b02497f1ba4dc622eaef9c813e6b0f0ebbb2f771e32adf9f4ef2  sgerrand.rsa.pub" | sha256sum -c -
+      - run:
           name: Create Docker volumes
           command: |
             docker create --name input --volume /home/builder/package alpine:3.8 /bin/true
