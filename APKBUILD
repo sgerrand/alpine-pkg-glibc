@@ -7,7 +7,7 @@ pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/sgerrand/alpine-pkg-glibc"
-license="GPL"
+license="LGPL"
 source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
 nsswitch.conf
 ld.so.conf"
@@ -17,8 +17,8 @@ triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
 package() {
   mkdir -p "$pkgdir/lib" "$pkgdir/lib64" "$pkgdir/usr/glibc-compat/lib/locale" "$pkgdir"/etc
   cp -a "$srcdir"/usr "$pkgdir"
-  cp "$srcdir"/nsswitch.conf "$pkgdir"/etc/nsswitch.conf
   cp "$srcdir"/ld.so.conf "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
+  cp "$srcdir"/nsswitch.conf "$pkgdir"/etc/nsswitch.conf
   rm "$pkgdir"/usr/glibc-compat/etc/rpc
   rm -rf "$pkgdir"/usr/glibc-compat/bin
   rm -rf "$pkgdir"/usr/glibc-compat/sbin
