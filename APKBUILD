@@ -3,15 +3,17 @@
 pkgname="glibc"
 pkgver="2.28"
 _pkgrel="0"
+_zlibpkgver="1.2.11"
 pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="x86_64"
 url="https://github.com/sgerrand/alpine-pkg-glibc"
 license="LGPL"
-source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-x86_64.tar.gz
+source="https://github.com/sgerrand/docker-glibc-builder/releases/download/$pkgver-$_pkgrel/glibc-bin-$pkgver-$_pkgrel-$arch.tar.gz
+zlib-1:$_zlibpkgver-3-$arch.pkg.tar.xz::https://www.archlinux.org/packages/core/x86_64/zlib/download
 nsswitch.conf
 ld.so.conf"
-subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n"
+subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n $pkgname-zlib"
 triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
 
 package() {
@@ -46,6 +48,22 @@ i18n() {
   cp -a "$srcdir"/usr/glibc-compat/share "$subpkgdir"/usr/glibc-compat
 }
 
+zlib() {
+  depends="$pkgname-bin"
+  install="$pkgname-zlib.post-install"
+
+  mkdir -p "$subpkgdir"/usr/glibc-compat/lib
+
+  install -m 644 "$srcdir"/usr/lib/libz.so "$subpkgdir"/usr/glibc-compat/lib/libz.so
+
+  local file; for file in libz.so.1 \
+                            libz.so.$_zlibpkgver; do
+
+    cp "$srcdir"/usr/lib/$file "$subpkgdir"/usr/glibc-compat/lib/$file
+  done
+}
+
 sha512sums="77403b5c28d0f251d4855dd1de2f5d46f20b32ed63792c97fbd409cb6c57b711c0a5471bb68aba1d8a3fe0df88b64e9c9e14b1d5235734c84c9758dd95b9c6c7  glibc-bin-2.28-0-x86_64.tar.gz
+a7e4525732ce0fccd928223643051d907af6cf1e34b1f8333c34ce20de945d6d979048d1c16dfb024a0a27f8d1c2f2dbce468ced946a20f4fecfb88d73ce5b36  zlib-1:1.2.11-3-x86_64.pkg.tar.xz
 478bdd9f7da9e6453cca91ce0bd20eec031e7424e967696eb3947e3f21aa86067aaf614784b89a117279d8a939174498210eaaa2f277d3942d1ca7b4809d4b7e  nsswitch.conf
 2912f254f8eceed1f384a1035ad0f42f5506c609ec08c361e2c0093506724a6114732db1c67171c8561f25893c0dd5c0c1d62e8a726712216d9b45973585c9f7  ld.so.conf"
