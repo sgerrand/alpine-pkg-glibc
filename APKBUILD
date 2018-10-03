@@ -30,6 +30,11 @@ package() {
   ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib/ld-linux-x86-64.so.2
   ln -s /usr/glibc-compat/lib/ld-linux-x86-64.so.2 ${pkgdir}/lib64/ld-linux-x86-64.so.2
   ln -s /usr/glibc-compat/etc/ld.so.cache ${pkgdir}/etc/ld.so.cache
+
+  local file; for file in COPYING LICENSES; do
+    install -m 644 -D "$srcdir"/$FILE \
+      "$pkgdir"/usr/glibc-compat/share/licenses/$pkgname/$file
+  done
 }
 
 bin() {
