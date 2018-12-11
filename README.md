@@ -28,4 +28,9 @@ Any previous reference to `https://raw.githubusercontent.com/sgerrand/alpine-pkg
 You will need to generate your locale if you would like to use a specific one for your glibc application. You can do this by installing the `glibc-i18n` package and generating a locale using the `localedef` binary. An example for en_US.UTF-8 would be:
 
     apk add glibc-bin-2.28-r1.apk glibc-i18n-2.28-r1.apk
-    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
+
+## zlib
+
+Some glibc applications have been compiled with a version of [zlib](https://www.zlib.net/) that is linked against glibc. Running these applications without an appropriate version of zlib causes these applications to throw errors. You can install `glibc-zlib` package for this purpose:
+
+    apk add glibc-bin-2.28-r1.apk glibc-zlib-2.28-r1.apk
