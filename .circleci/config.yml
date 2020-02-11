@@ -69,6 +69,22 @@ jobs:
       - store_artifacts:
           destination: pkgs
           path: packages
+  doctests:
+    <<: *basic-job
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Install required packages
+          command: apk add --no-cache git openssh-client
+      - checkout
+      - run:
+          name: Parse and run installation steps
+          command: |
+            while read line
+            do  
+              echo "$line" | sed -e '/^[#:]/D' -e '/^$/D' -e '/^apk/p' -e '/^wget/p' -e '/^[A-z]/D' | sh -ex 
+            done < README.md
   upload-master:
     <<: *upload-job
     steps:
@@ -99,6 +115,7 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - doctests
       - upload-master:
           filters:
             branches:
