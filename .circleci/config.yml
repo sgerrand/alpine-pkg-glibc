@@ -115,6 +115,7 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - doctests
       - upload-master:
           filters:
             branches:
