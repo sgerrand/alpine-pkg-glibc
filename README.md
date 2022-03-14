@@ -1,6 +1,6 @@
 # alpine-pkg-glibc
 
-[![CircleCI](https://circleci.com/gh/sgerrand/alpine-pkg-glibc/tree/master.svg?style=svg)](https://circleci.com/gh/sgerrand/alpine-pkg-glibc/tree/master) ![x86_64](https://img.shields.io/badge/x86__64-supported-brightgreen.svg)
+[![CircleCI](https://circleci.com/gh/sgerrand/alpine-pkg-glibc/tree/main.svg?style=svg)](https://circleci.com/gh/sgerrand/alpine-pkg-glibc/tree/main) ![x86_64](https://img.shields.io/badge/x86__64-supported-brightgreen.svg)
 
 This is the [GNU C Library](https://gnu.org/software/libc/) as a Alpine Linux package to run binaries linked against `glibc`. This package utilizes a custom built glibc binary based on the vanilla glibc source. Built binary artifacts come from https://github.com/sgerrand/docker-glibc-builder.
 
