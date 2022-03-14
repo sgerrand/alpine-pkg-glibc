@@ -33,7 +33,7 @@ package() {
 }
 
 bin() {
-  depends="$pkgname libc6-compat libgcc"
+  depends="$pkgname bash libc6-compat libgcc"
   mkdir -p "$subpkgdir"/usr/glibc-compat
   cp -a "$srcdir"/usr/glibc-compat/bin "$subpkgdir"/usr/glibc-compat
   cp -a "$srcdir"/usr/glibc-compat/sbin "$subpkgdir"/usr/glibc-compat
