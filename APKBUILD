@@ -3,7 +3,7 @@
 pkgname="glibc"
 pkgver="2.35"
 _pkgrel="0"
-pkgrel="0"
+pkgrel="1"
 pkgdesc="GNU C Library compatibility layer"
 options="lib64"
 arch="x86_64"
