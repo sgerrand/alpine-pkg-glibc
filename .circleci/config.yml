@@ -12,10 +12,10 @@ references:
   upload-packages: &upload-packages
     run:
       command: apk add --no-cache git openssh-client
-      name: Install dependencies of go get
+      name: Install dependencies of go install
   upload-ghr: &upload-ghr
     run:
-      command: go get github.com/tcnksm/ghr
+      command: go install github.com/tcnksm/ghr@latest
       name: Install ghr executable
 jobs:
   build:
